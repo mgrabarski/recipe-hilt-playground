@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/receipesFragment"
-        android:name="com.mg.recipe.ReceipesFragment"
+        android:name="com.mg.recipe.RecipesFragment"
         android:label="fragment_receipes"
-        tools:layout="@layout/fragment_receipes" />
+        tools:layout="@layout/fragment_recipes" />
     <fragment
         android:id="@+id/favoriteReceipesFragment"
-        android:name="com.mg.recipe.FavoriteReceipesFragment"
+        android:name="com.mg.recipe.FavoriteRecipesFragment"
         android:label="fragment_favorite_receipes"
         tools:layout="@layout/fragment_favorite_receipes" />
     <fragment
