@@ -36,6 +36,16 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    applicationVariants.all { variant ->
+        variant.buildConfigField "String", "SPOONACULAR_API_KEY", "\"" + getApiKey() + "\""
+    }
+}
+
+static def getApiKey() {
+    Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['SPOONACULAR_API_KEY']
 }
 
 dependencies {
