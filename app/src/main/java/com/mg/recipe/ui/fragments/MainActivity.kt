@@ -1,4 +1,4 @@
-package com.mg.recipe
+package com.mg.recipe.ui.fragments
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.mg.recipe.R
 import com.mg.recipe.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
