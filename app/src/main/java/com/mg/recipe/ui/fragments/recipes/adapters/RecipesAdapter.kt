@@ -2,6 +2,7 @@ package com.mg.recipe.ui.fragments.recipes.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mg.recipe.databinding.RowReceipeBinding
@@ -12,7 +13,7 @@ import com.mg.recipe.ui.fragments.recipes.adapters.RecipesAdapter.RecipeViewHold
 
 class RecipesAdapter : RecyclerView.Adapter<RecipeViewHolder>() {
 
-    private var recipes = listOf<Result>()
+    private var recipes = emptyList<Result>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = from(parent)
 
@@ -23,8 +24,10 @@ class RecipesAdapter : RecyclerView.Adapter<RecipeViewHolder>() {
     override fun getItemCount(): Int = recipes.size
 
     fun setData(newData: FoodRecipe) {
+        val recipesDiffUtil = RecipesDiffUtil(recipes, newData.results)
+        val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes = newData.results
-        notifyDataSetChanged()
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 
     class RecipeViewHolder(private val binding: RowReceipeBinding) : ViewHolder(binding.root) {
