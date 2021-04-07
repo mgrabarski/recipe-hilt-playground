@@ -6,6 +6,9 @@ import javax.inject.Inject
 
 @ActivityRetainedScoped
 class FoodRecipesRepository @Inject constructor(
-    private val remote: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource
 ) {
+
+    val remote
+        get() = remoteDataSource
 }
