@@ -10,8 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.mg.recipe.App
 import com.mg.recipe.repo.FoodRecipesRepository
 import com.mg.recipe.repo.network.NetworkResult
-import com.mg.recipe.repo.network.NetworkResult.Error
-import com.mg.recipe.repo.network.NetworkResult.Success
+import com.mg.recipe.repo.network.NetworkResult.*
 import com.mg.recipe.spoonacular.data.models.FoodRecipe
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -31,6 +30,7 @@ class MainViewModel @ViewModelInject constructor(
     }
 
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
+        recipesResponse.value = Loading()
         if (hasInternetConnection()) {
             try {
                 val response = repository.remote.getRecipes(queries)
