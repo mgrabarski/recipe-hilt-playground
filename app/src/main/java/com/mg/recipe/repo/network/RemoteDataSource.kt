@@ -1,4 +1,4 @@
-package com.mg.recipe.repo.remote
+package com.mg.recipe.repo.network
 
 import com.mg.recipe.spoonacular.FoodRecipesApi
 import javax.inject.Inject
