@@ -1,4 +1,4 @@
-package com.mg.recipe.spoonacular
+package com.mg.recipe
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
