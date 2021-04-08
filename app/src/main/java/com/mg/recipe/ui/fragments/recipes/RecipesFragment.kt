@@ -1,18 +1,54 @@
 package com.mg.recipe.ui.fragments.recipes
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.mg.recipe.R
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.mg.recipe.BuildConfig
+import com.mg.recipe.databinding.FragmentRecipesBinding
+import com.mg.recipe.repo.network.NetworkResult.Loading
+import com.mg.recipe.repo.network.NetworkResult.Success
+import com.mg.recipe.ui.fragments.MainViewModel
+import com.mg.recipe.ui.fragments.recipes.adapters.RecipesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipesFragment : Fragment() {
+
+    private val mainViewModel: MainViewModel by viewModels()
+    private val mAdapter by lazy { RecipesAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_recipes, container, false)
-    }
+    ) = FragmentRecipesBinding.inflate(inflater, container, false)
+        .apply {
+            this.lifecycleOwner = this@RecipesFragment
+            this.recipesRv.adapter = mAdapter
+            mainViewModel.getRecipes(
+                mapOf(
+                    "number" to "50",
+                    "apiKey" to BuildConfig.SPOONACULAR_API_KEY,
+                    "type" to "snack",
+                    "diet" to "vegan"
+                )
+            )
+            mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
+                when (response) {
+                    is Loading -> {
+                    }
+                    is Success -> response.data?.let { mAdapter.setData(it) }
+                    is Error -> Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    else -> {
+                    }
+                }
+            })
+        }
+        .root
 }
