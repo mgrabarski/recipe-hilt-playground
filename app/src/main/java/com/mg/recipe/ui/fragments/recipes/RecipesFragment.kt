@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels()
+    private val recipesViewModel: RecipesViewModel by viewModels()
     private val mAdapter by lazy { RecipesAdapter() }
 
     override fun onCreateView(
@@ -27,14 +28,7 @@ class RecipesFragment : Fragment() {
         .apply {
             this.lifecycleOwner = this@RecipesFragment
             this.recipesRv.adapter = mAdapter
-            mainViewModel.getRecipes(
-                mapOf(
-                    "number" to "50",
-                    "apiKey" to BuildConfig.SPOONACULAR_API_KEY,
-                    "type" to "snack",
-                    "diet" to "vegan"
-                )
-            )
+            mainViewModel.getRecipes(recipesViewModel.getRequestQueries())
             mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
                 when (response) {
                     is Loading -> {
