@@ -12,5 +12,11 @@ class RecipesRowBinding {
         fun setNumberOfLikes(view: TextView, likes: Int) {
             view.text = likes.toString()
         }
+
+        @JvmStatic
+        @BindingAdapter("setNumberOfMinutes")
+        fun setNumberOfMinutes(view: TextView, minutes: Int) {
+            view.text = minutes.toString()
+        }
     }
 }
