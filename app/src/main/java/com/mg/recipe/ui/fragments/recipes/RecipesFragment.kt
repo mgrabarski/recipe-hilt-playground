@@ -33,6 +33,7 @@ class RecipesFragment : Fragment() {
     ): View? {
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel
 
         setupRecyclerView()
         readDatabase()
