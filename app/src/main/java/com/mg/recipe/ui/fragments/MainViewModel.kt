@@ -4,14 +4,14 @@ import android.app.Application
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mg.recipe.App
 import com.mg.recipe.repo.FoodRecipesRepository
+import com.mg.recipe.repo.local.entities.Recipe
 import com.mg.recipe.repo.network.NetworkResult
 import com.mg.recipe.repo.network.NetworkResult.*
 import com.mg.recipe.spoonacular.data.models.FoodRecipe
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import android.content.Context.CONNECTIVITY_SERVICE as CONNECTIVITY_SERVICE1
@@ -22,6 +22,8 @@ class MainViewModel @ViewModelInject constructor(
     private val repository: FoodRecipesRepository,
     application: Application
 ) : AndroidViewModel(application) {
+
+    val readRecipes: LiveData<List<Recipe>> = repository.local.readDatabase().asLiveData()
 
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
@@ -35,11 +37,28 @@ class MainViewModel @ViewModelInject constructor(
             try {
                 val response = repository.remote.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesResponse(response)
+
+                val foodRecipe = recipesResponse.value!!.data
+                if (foodRecipe != null) {
+                    offlineCacheRecipes(foodRecipe)
+                }
+
             } catch (e: Exception) {
                 recipesResponse.value = Error("Recipes not found.")
             }
         } else {
             recipesResponse.value = Error("No internet connection")
+        }
+    }
+
+    private fun offlineCacheRecipes(foodRecipe: FoodRecipe) {
+        val recipes = Recipe(foodRecipe)
+        insertRecipes(recipes)
+    }
+
+    private fun insertRecipes(recipe: Recipe) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertRecipes(recipe)
         }
     }
 
