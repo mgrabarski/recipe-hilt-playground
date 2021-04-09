@@ -3,19 +3,25 @@ package com.mg.recipe.ui.fragments.recipes
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.mg.recipe.databinding.FragmentRecipesBinding
-import com.mg.recipe.repo.network.NetworkResult.Loading
-import com.mg.recipe.repo.network.NetworkResult.Success
+import com.mg.recipe.ext.observeOnce
+import com.mg.recipe.repo.network.NetworkResult.*
 import com.mg.recipe.ui.fragments.MainViewModel
 import com.mg.recipe.ui.fragments.recipes.adapters.RecipesAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
+
+    private var _binding: FragmentRecipesBinding? = null
+    private val binding get() = _binding!!
 
     private val mainViewModel: MainViewModel by viewModels()
     private val recipesViewModel: RecipesViewModel by viewModels()
@@ -24,41 +30,67 @@ class RecipesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentRecipesBinding.inflate(inflater, container, false)
-        .apply {
-            this.lifecycleOwner = this@RecipesFragment
-            this.recipesRv.adapter = mAdapter
-            loadData()
-        }
-        .root
+    ): View? {
+        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
 
-    private fun loadData() {
-        mainViewModel.readRecipes.observe(viewLifecycleOwner, { databaseData ->
-            if (databaseData.isNotEmpty()) {
-                Log.d("RecipesFragment", "read data from database")
-                mAdapter.setData(databaseData[0].foodRecipe)
-            } else {
-                requestNewData()
+        setupRecyclerView()
+        readDatabase()
+
+        return binding.root
+    }
+
+    private fun setupRecyclerView() {
+        binding.recipesRv.adapter = mAdapter
+    }
+
+    private fun readDatabase() {
+        lifecycleScope.launch {
+            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
+                if (database.isNotEmpty()) {
+                    Log.d("RecipesFragment", "readDatabase called!")
+                    mAdapter.setData(database[0].foodRecipe)
+                } else {
+                    requestApiData()
+                }
+            }
+        }
+    }
+
+    private fun requestApiData() {
+        Log.d("RecipesFragment", "requestApiData called!")
+        mainViewModel.getRecipes(recipesViewModel.getRequestQueries())
+        mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is Success -> {
+                    response.data?.let { mAdapter.setData(it) }
+                }
+                is Error -> {
+                    loadDataFromCache()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Loading -> {
+                }
             }
         })
     }
 
-    private fun requestNewData() {
-        Log.d("RecipesFragment", "request new data from api")
-        mainViewModel.getRecipes(recipesViewModel.getRequestQueries())
-        mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
-            when (response) {
-                is Loading -> {
+    private fun loadDataFromCache() {
+        lifecycleScope.launch {
+            mainViewModel.readRecipes.observe(viewLifecycleOwner, { database ->
+                if (database.isNotEmpty()) {
+                    mAdapter.setData(database[0].foodRecipe)
                 }
-                is Success -> response.data?.let { mAdapter.setData(it) }
-                is Error -> Toast.makeText(
-                    requireContext(),
-                    response.message.toString(),
-                    Toast.LENGTH_LONG
-                ).show()
-                else -> {
-                }
-            }
-        })
+            })
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
