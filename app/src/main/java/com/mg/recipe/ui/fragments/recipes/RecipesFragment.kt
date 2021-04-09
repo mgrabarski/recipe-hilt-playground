@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.mg.recipe.BuildConfig
 import com.mg.recipe.databinding.FragmentRecipesBinding
 import com.mg.recipe.repo.network.NetworkResult.Loading
 import com.mg.recipe.repo.network.NetworkResult.Success
@@ -28,21 +27,35 @@ class RecipesFragment : Fragment() {
         .apply {
             this.lifecycleOwner = this@RecipesFragment
             this.recipesRv.adapter = mAdapter
-            mainViewModel.getRecipes(recipesViewModel.getRequestQueries())
-            mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
-                when (response) {
-                    is Loading -> {
-                    }
-                    is Success -> response.data?.let { mAdapter.setData(it) }
-                    is Error -> Toast.makeText(
-                        requireContext(),
-                        response.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    else -> {
-                    }
-                }
-            })
+            getRecipes()
         }
         .root
+
+    private fun getRecipes() {
+        mainViewModel.readRecipes.observe(viewLifecycleOwner, {
+            if (it.isNotEmpty()) {
+                mAdapter.setData(it[0].foodRecipe)
+            } else {
+                requestNewData()
+            }
+        })
+    }
+
+    private fun requestNewData() {
+        mainViewModel.getRecipes(recipesViewModel.getRequestQueries())
+        mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is Loading -> {
+                }
+                is Success -> response.data?.let { mAdapter.setData(it) }
+                is Error -> Toast.makeText(
+                    requireContext(),
+                    response.message.toString(),
+                    Toast.LENGTH_LONG
+                ).show()
+                else -> {
+                }
+            }
+        })
+    }
 }
