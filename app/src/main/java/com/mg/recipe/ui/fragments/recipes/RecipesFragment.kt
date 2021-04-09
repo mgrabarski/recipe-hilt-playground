@@ -1,6 +1,7 @@
 package com.mg.recipe.ui.fragments.recipes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -34,6 +35,7 @@ class RecipesFragment : Fragment() {
     private fun getRecipes() {
         mainViewModel.readRecipes.observe(viewLifecycleOwner, {
             if (it.isNotEmpty()) {
+                Log.d("RecipesFragment", "read data from database")
                 mAdapter.setData(it[0].foodRecipe)
             } else {
                 requestNewData()
@@ -42,6 +44,7 @@ class RecipesFragment : Fragment() {
     }
 
     private fun requestNewData() {
+        Log.d("RecipesFragment", "request new data from api")
         mainViewModel.getRecipes(recipesViewModel.getRequestQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
