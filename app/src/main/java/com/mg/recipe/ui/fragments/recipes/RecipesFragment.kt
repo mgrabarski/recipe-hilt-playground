@@ -28,15 +28,15 @@ class RecipesFragment : Fragment() {
         .apply {
             this.lifecycleOwner = this@RecipesFragment
             this.recipesRv.adapter = mAdapter
-            getRecipes()
+            loadData()
         }
         .root
 
-    private fun getRecipes() {
-        mainViewModel.readRecipes.observe(viewLifecycleOwner, {
-            if (it.isNotEmpty()) {
+    private fun loadData() {
+        mainViewModel.readRecipes.observe(viewLifecycleOwner, { databaseData ->
+            if (databaseData.isNotEmpty()) {
                 Log.d("RecipesFragment", "read data from database")
-                mAdapter.setData(it[0].foodRecipe)
+                mAdapter.setData(databaseData[0].foodRecipe)
             } else {
                 requestNewData()
             }
