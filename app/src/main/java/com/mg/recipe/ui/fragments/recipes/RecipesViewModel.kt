@@ -11,8 +11,8 @@ class RecipesViewModel @ViewModelInject constructor(
 
     fun getRequestQueries() = mapOf(
         QUERY_NUMBER to "50",
-        QUERY_TYPE to "snack",
-        QUERY_DIET to "vegan",
+        QUERY_TYPE to "main course",
+        QUERY_DIET to "gluten free",
         QUERY_ADD_RECIPE_INFORMATION to "true",
         QUERY_FILL_INGREDIENTS to "true"
     )
