@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.mg.recipe.R
 import com.mg.recipe.databinding.FragmentRecipesBinding
 import com.mg.recipe.ext.observeOnce
 import com.mg.recipe.repo.network.NetworkResult.*
@@ -30,13 +32,17 @@ class RecipesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
 
         setupRecyclerView()
         readDatabase()
+
+        binding.recipesFab.setOnClickListener {
+            findNavController().navigate(R.id.action_receipesFragment_to_recipeBottomSheetFragment)
+        }
 
         return binding.root
     }
