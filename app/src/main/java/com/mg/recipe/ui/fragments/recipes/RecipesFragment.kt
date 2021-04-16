@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.mg.recipe.R
 import com.mg.recipe.databinding.FragmentRecipesBinding
 import com.mg.recipe.ext.observeOnce
@@ -21,6 +22,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
+
+    private val args by navArgs<RecipesFragmentArgs>()
 
     private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
