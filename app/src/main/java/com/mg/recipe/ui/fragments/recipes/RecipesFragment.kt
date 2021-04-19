@@ -58,7 +58,11 @@ class RecipesFragment : Fragment() {
         }
 
         binding.recipesFab.setOnClickListener {
-            findNavController().navigate(R.id.action_receipesFragment_to_recipeBottomSheetFragment)
+            if (recipesViewModel.networkState) {
+                findNavController().navigate(R.id.action_receipesFragment_to_recipeBottomSheetFragment)
+            } else {
+                recipesViewModel.showNetworkState()
+            }
         }
 
         return binding.root
