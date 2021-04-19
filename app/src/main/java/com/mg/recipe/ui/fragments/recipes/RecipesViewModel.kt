@@ -1,6 +1,7 @@
 package com.mg.recipe.ui.fragments.recipes
 
 import android.app.Application
+import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,6 +21,8 @@ class RecipesViewModel @ViewModelInject constructor(
 
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
+
+    var networkState = false
 
     val readMealAndDietType = foodDataStoreRepository.readMealAndDietType
 
@@ -55,5 +58,11 @@ class RecipesViewModel @ViewModelInject constructor(
             QUERY_ADD_RECIPE_INFORMATION to "true",
             QUERY_FILL_INGREDIENTS to "true"
         )
+    }
+
+    fun showNetworkState() {
+        if (!networkState) {
+            Toast.makeText(getApplication(), "No internet connection", Toast.LENGTH_SHORT).show()
+        }
     }
 }
