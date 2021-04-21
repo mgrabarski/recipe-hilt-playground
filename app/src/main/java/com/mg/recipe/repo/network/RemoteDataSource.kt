@@ -12,4 +12,9 @@ class RemoteDataSource @Inject constructor(
         foodRecipesApi.getRecipes(queries.toMutableMap().apply {
             put(QUERY_API_KEY, BuildConfig.SPOONACULAR_API_KEY)
         })
+
+    suspend fun searchRecipes(searchQuery: Map<String, String>) =
+        foodRecipesApi.searchRecipes(searchQuery.toMutableMap().apply {
+            put(QUERY_API_KEY, BuildConfig.SPOONACULAR_API_KEY)
+        })
 }
