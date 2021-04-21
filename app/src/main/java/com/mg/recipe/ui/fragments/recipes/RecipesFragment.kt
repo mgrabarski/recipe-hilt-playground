@@ -112,6 +112,28 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         })
     }
 
+    private fun searchApiData(searchQuery: String) {
+        val queries = recipesViewModel.getSearchQueries(searchQuery)
+        mainViewModel.searchRecipes(queries)
+        mainViewModel.searchRecipeResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Success -> {
+                    response.data?.let { mAdapter.setData(it) }
+                }
+                is Error -> {
+                    loadDataFromCache()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Loading -> {
+                }
+            }
+        }
+    }
+
     private fun loadDataFromCache() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observe(viewLifecycleOwner, { database ->
@@ -135,6 +157,9 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            searchApiData(query)
+        }
         return true
     }
 

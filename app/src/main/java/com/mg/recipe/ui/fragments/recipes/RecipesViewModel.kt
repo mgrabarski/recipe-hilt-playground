@@ -52,7 +52,6 @@ class RecipesViewModel @ViewModelInject constructor(
     }
 
     fun getRequestQueries(): Map<String, String> {
-
         viewModelScope.launch {
             readMealAndDietType.collect {
                 mealType = it.selectedMealType
@@ -68,6 +67,13 @@ class RecipesViewModel @ViewModelInject constructor(
             QUERY_FILL_INGREDIENTS to "true"
         )
     }
+
+    fun getSearchQueries(searchQuery: String) = hashMapOf(
+        QUERY_SEARCH to searchQuery,
+        QUERY_NUMBER to DEFAULT_RECIPES_NUMBER,
+        QUERY_ADD_RECIPE_INFORMATION to "true",
+        QUERY_FILL_INGREDIENTS to "true"
+    )
 
     fun showNetworkState() {
         if (!networkState) {
