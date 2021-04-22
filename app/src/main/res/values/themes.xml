@@ -31,4 +31,8 @@
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabSelectedTextColor">@color/white</item>
     </style>
+
+    <style name="RecipeTabTextStyle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>
