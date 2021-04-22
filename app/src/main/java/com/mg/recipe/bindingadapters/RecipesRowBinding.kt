@@ -3,10 +3,14 @@ package com.mg.recipe.bindingadapters
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
 import coil.load
 import com.mg.recipe.R
+import com.mg.recipe.spoonacular.data.models.Result
+import com.mg.recipe.ui.fragments.recipes.RecipesFragmentDirections.Companion.actionReceipesFragmentToRecipeDetailsActivity
 
 @BindingAdapter("loadImageFromUrl")
 fun loadImageFromUrl(view: ImageView, url: String) {
@@ -34,5 +38,13 @@ fun applyVeganColor(view: View, vegan: Boolean) {
             is TextView -> view.setTextColor(greenColor)
             is ImageView -> view.setColorFilter(greenColor)
         }
+    }
+}
+
+@BindingAdapter("onRecipeClickListener")
+fun onRecipeClickListener(recipeRowLayout: ConstraintLayout, result: Result) {
+    recipeRowLayout.setOnClickListener {
+        val action = actionReceipesFragmentToRecipeDetailsActivity(result)
+        recipeRowLayout.findNavController().navigate(action)
     }
 }
