@@ -15,8 +15,11 @@
             app:destination="@id/recipeBottomSheetFragment" />
         <argument
             android:name="backFromBottomSheet"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_receipesFragment_to_recipeDetailsActivity"
+            app:destination="@id/recipeDetailsActivity" />
     </fragment>
     <fragment
         android:id="@+id/favoriteReceipesFragment"
@@ -37,4 +40,13 @@
             android:id="@+id/action_recipeBottomSheetFragment_to_receipesFragment"
             app:destination="@id/receipesFragment" />
     </dialog>
+    <activity
+        android:id="@+id/recipeDetailsActivity"
+        android:name="com.mg.recipe.ui.RecipeDetailsActivity"
+        android:label="activity_recipe_details"
+        tools:layout="@layout/activity_recipe_details">
+        <argument
+            android:name="result"
+            app:argType="com.mg.recipe.spoonacular.data.models.Result" />
+    </activity>
 </navigation>

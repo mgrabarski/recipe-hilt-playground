@@ -1,6 +1,7 @@
 package com.mg.recipe.spoonacular.data.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Result(
     @SerializedName("aggregateLikes")
@@ -33,4 +34,4 @@ data class Result(
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
     val veryHealthy: Boolean,
-)
+) : Serializable
