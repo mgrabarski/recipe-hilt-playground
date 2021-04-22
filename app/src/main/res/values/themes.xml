@@ -16,4 +16,12 @@
         <item name="android:textColor">@color/chipTextColor</item>
         <item name="checkedIconTint">@color/chipTextColor</item>
     </style>
+
+    <style name="RecipeDetailsActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
 </resources>
