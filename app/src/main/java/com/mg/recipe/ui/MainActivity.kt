@@ -1,4 +1,4 @@
-package com.mg.recipe.ui.fragments
+package com.mg.recipe.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
