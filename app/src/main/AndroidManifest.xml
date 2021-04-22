@@ -16,6 +16,7 @@
         android:theme="@style/Theme.Recipe">
         <activity
             android:name=".ui.RecipeDetailsActivity"
+            android:label="@string/details"
             android:theme="@style/RecipeDetailsActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
