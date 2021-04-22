@@ -8,41 +8,31 @@ import androidx.databinding.BindingAdapter
 import coil.load
 import com.mg.recipe.R
 
-class RecipesRowBinding {
+@BindingAdapter("loadImageFromUrl")
+fun loadImageFromUrl(view: ImageView, url: String) {
+    view.load(url) {
+        crossfade(600)
+        error(R.drawable.ic_error_red)
+    }
+}
 
-    companion object {
+@BindingAdapter("setNumberOfLikes")
+fun setNumberOfLikes(view: TextView, likes: Int) {
+    view.text = likes.toString()
+}
 
-        @JvmStatic
-        @BindingAdapter("loadImageFromUrl")
-        fun loadImageFromUrl(view: ImageView, url: String) {
-            view.load(url) {
-                crossfade(600)
-                error(R.drawable.ic_error_red)
-            }
-        }
+@BindingAdapter("setNumberOfMinutes")
+fun setNumberOfMinutes(view: TextView, minutes: Int) {
+    view.text = minutes.toString()
+}
 
-        @JvmStatic
-        @BindingAdapter("setNumberOfLikes")
-        fun setNumberOfLikes(view: TextView, likes: Int) {
-            view.text = likes.toString()
-        }
-
-        @JvmStatic
-        @BindingAdapter("setNumberOfMinutes")
-        fun setNumberOfMinutes(view: TextView, minutes: Int) {
-            view.text = minutes.toString()
-        }
-
-        @JvmStatic
-        @BindingAdapter("applyVeganColor")
-        fun applyVeganColor(view: View, vegan: Boolean) {
-            if (vegan) {
-                val greenColor = ContextCompat.getColor(view.context, R.color.green)
-                when (view) {
-                    is TextView -> view.setTextColor(greenColor)
-                    is ImageView -> view.setColorFilter(greenColor)
-                }
-            }
+@BindingAdapter("applyVeganColor")
+fun applyVeganColor(view: View, vegan: Boolean) {
+    if (vegan) {
+        val greenColor = ContextCompat.getColor(view.context, R.color.green)
+        when (view) {
+            is TextView -> view.setTextColor(greenColor)
+            is ImageView -> view.setColorFilter(greenColor)
         }
     }
 }
