@@ -9,15 +9,15 @@ import com.mg.recipe.databinding.ActivityRecipeDetailsBinding
 
 class RecipeDetailsActivity : AppCompatActivity() {
 
-    private lateinit var bining: ActivityRecipeDetailsBinding
+    private lateinit var binding: ActivityRecipeDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bining = ActivityRecipeDetailsBinding.inflate(layoutInflater)
-        setContentView(bining.root)
+        binding = ActivityRecipeDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(bining.toolbar)
-        bining.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
