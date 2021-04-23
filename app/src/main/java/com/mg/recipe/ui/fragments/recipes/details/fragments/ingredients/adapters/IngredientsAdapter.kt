@@ -2,8 +2,10 @@ package com.mg.recipe.ui.fragments.recipes.details.fragments.ingredients.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.mg.recipe.components.AppDiffUtil
 import com.mg.recipe.databinding.RowIngredientBinding
 import com.mg.recipe.spoonacular.data.models.ExtendedIngredient
 import com.mg.recipe.ui.fragments.recipes.details.fragments.ingredients.adapters.IngredientsAdapter.IngredientViewHolder
@@ -11,7 +13,7 @@ import com.mg.recipe.ui.fragments.recipes.details.fragments.ingredients.adapters
 
 class IngredientsAdapter : RecyclerView.Adapter<IngredientViewHolder>() {
 
-    private val ingredients = mutableListOf<ExtendedIngredient>()
+    private var ingredients = emptyList<ExtendedIngredient>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = from(parent)
 
@@ -20,6 +22,13 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientViewHolder>() {
     }
 
     override fun getItemCount() = ingredients.size
+
+    fun setData(newIngredients: List<ExtendedIngredient>) {
+        val recipesDiffUtil = AppDiffUtil(ingredients, newIngredients)
+        val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
+        ingredients = newIngredients
+        diffUtilResult.dispatchUpdatesTo(this)
+    }
 
     class IngredientViewHolder(val binding: RowIngredientBinding) : ViewHolder(binding.root) {
 
