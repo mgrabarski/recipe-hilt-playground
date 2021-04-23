@@ -264,9 +264,9 @@
 
                 <TextView
                     android:id="@+id/summary_textView"
+                    parseHtml="@{recipe.summary}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{recipe.summary}"
                     android:textSize="16sp"
                     tools:text="TextView" />
             </FrameLayout>

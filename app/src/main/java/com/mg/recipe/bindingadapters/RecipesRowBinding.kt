@@ -11,6 +11,7 @@ import coil.load
 import com.mg.recipe.R
 import com.mg.recipe.spoonacular.data.models.Result
 import com.mg.recipe.ui.fragments.recipes.RecipesFragmentDirections.Companion.actionReceipesFragmentToRecipeDetailsActivity
+import org.jsoup.Jsoup
 
 @BindingAdapter("loadImageFromUrl")
 fun loadImageFromUrl(view: ImageView, url: String) {
@@ -46,5 +47,12 @@ fun onRecipeClickListener(recipeRowLayout: ConstraintLayout, result: Result) {
     recipeRowLayout.setOnClickListener {
         val action = actionReceipesFragmentToRecipeDetailsActivity(result)
         recipeRowLayout.findNavController().navigate(action)
+    }
+}
+
+@BindingAdapter("parseHtml")
+fun parseHtml(textView: TextView, html: String?) {
+    html?.let {
+        textView.text = Jsoup.parse(html).text()
     }
 }
