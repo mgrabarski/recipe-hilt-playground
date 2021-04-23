@@ -94,7 +94,8 @@
                     app:layout_constraintStart_toStartOf="@+id/heartTv"
                     app:layout_constraintTop_toBottomOf="@+id/descriptionTv"
                     app:srcCompat="@drawable/ic_heart"
-                    app:tint="@color/red" />
+                    app:tint="@color/red"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/heartTv"
@@ -134,7 +135,7 @@
 
                 <ImageView
                     android:id="@+id/leafIv"
-                    applyVeganColor="@{result.vegan}"
+                    applyGreenColorOnView="@{result.vegan}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toTopOf="@+id/clockTv"
@@ -146,7 +147,7 @@
 
                 <TextView
                     android:id="@+id/leafTv"
-                    applyVeganColor="@{result.vegan}"
+                    applyGreenColorOnView="@{result.vegan}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"

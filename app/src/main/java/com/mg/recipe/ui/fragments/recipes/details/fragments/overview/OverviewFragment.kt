@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mg.recipe.databinding.FragmentRecipeOverviewBinding
+import com.mg.recipe.spoonacular.data.models.Result
+import com.mg.recipe.ui.KEY_RECIPE_BUNDLE
 
 class OverviewFragment : Fragment() {
 
@@ -17,7 +19,15 @@ class OverviewFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentRecipeOverviewBinding.inflate(inflater, container, false).root
+    ): View {
+        _binding = FragmentRecipeOverviewBinding.inflate(inflater, container, false)
+
+        arguments?.getSerializable(KEY_RECIPE_BUNDLE)?.let {
+            binding.recipe = it as Result
+        }
+
+        return binding.root
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

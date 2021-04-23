@@ -12,6 +12,8 @@ import com.mg.recipe.ui.fragments.recipes.details.fragments.ingredients.Ingredie
 import com.mg.recipe.ui.fragments.recipes.details.fragments.instructions.InstructionsFragment
 import com.mg.recipe.ui.fragments.recipes.details.fragments.overview.OverviewFragment
 
+const val KEY_RECIPE_BUNDLE = "recipeBundle"
+
 class RecipeDetailsActivity : AppCompatActivity() {
 
     private val args by navArgs<RecipeDetailsActivityArgs>()
@@ -43,7 +45,7 @@ class RecipeDetailsActivity : AppCompatActivity() {
         )
 
         val bundle = Bundle().apply {
-            putSerializable("recipeBundle", args.result)
+            putSerializable(KEY_RECIPE_BUNDLE, args.result)
         }
 
         val pagerAdapter = PagerAdapter(bundle, fragments, titles, supportFragmentManager)

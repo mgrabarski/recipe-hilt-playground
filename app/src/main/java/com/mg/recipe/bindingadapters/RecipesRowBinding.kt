@@ -30,9 +30,9 @@ fun setNumberOfMinutes(view: TextView, minutes: Int) {
     view.text = minutes.toString()
 }
 
-@BindingAdapter("applyVeganColor")
-fun applyVeganColor(view: View, vegan: Boolean) {
-    if (vegan) {
+@BindingAdapter("applyGreenColorOnView")
+fun applyGreenColorOnView(view: View, apply: Boolean) {
+    if (apply) {
         val greenColor = ContextCompat.getColor(view.context, R.color.green)
         when (view) {
             is TextView -> view.setTextColor(greenColor)
