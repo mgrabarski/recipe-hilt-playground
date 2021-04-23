@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="ingredient"
+            type="com.mg.recipe.spoonacular.data.models.ExtendedIngredient" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
