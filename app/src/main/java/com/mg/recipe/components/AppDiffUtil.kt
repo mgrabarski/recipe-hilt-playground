@@ -1,11 +1,10 @@
-package com.mg.recipe.ui.fragments.recipes.adapters
+package com.mg.recipe.components
 
 import androidx.recyclerview.widget.DiffUtil
-import com.mg.recipe.spoonacular.data.models.Result
 
-class RecipesDiffUtil(
-    private val oldList: List<Result>,
-    private val newList: List<Result>
+class AppDiffUtil<T>(
+    private val oldList: List<T>,
+    private val newList: List<T>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

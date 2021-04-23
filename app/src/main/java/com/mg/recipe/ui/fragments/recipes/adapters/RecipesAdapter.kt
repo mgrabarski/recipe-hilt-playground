@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.mg.recipe.components.AppDiffUtil
 import com.mg.recipe.databinding.RowReceipeBinding
 import com.mg.recipe.spoonacular.data.models.FoodRecipe
 import com.mg.recipe.spoonacular.data.models.Result
@@ -24,7 +25,7 @@ class RecipesAdapter : RecyclerView.Adapter<RecipeViewHolder>() {
     override fun getItemCount(): Int = recipes.size
 
     fun setData(newData: FoodRecipe) {
-        val recipesDiffUtil = RecipesDiffUtil(recipes, newData.results)
+        val recipesDiffUtil = AppDiffUtil(recipes, newData.results)
         val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes = newData.results
         diffUtilResult.dispatchUpdatesTo(this)
