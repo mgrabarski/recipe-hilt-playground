@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mg.recipe.databinding.FragmentRecipeIngredientsBinding
+import com.mg.recipe.spoonacular.data.models.Result
+import com.mg.recipe.ui.KEY_RECIPE_BUNDLE
 import com.mg.recipe.ui.fragments.recipes.details.fragments.ingredients.adapters.IngredientsAdapter
 
 class IngredientsFragment : Fragment() {
@@ -24,6 +26,11 @@ class IngredientsFragment : Fragment() {
         _binding = FragmentRecipeIngredientsBinding.inflate(inflater, container, false)
 
         binding.ingredientsRecyclerView.adapter = adapter
+
+        arguments?.getSerializable(KEY_RECIPE_BUNDLE)?.let {
+            val result = it as Result
+            adapter.setData(result.extendedIngredients)
+        }
 
         return binding.root
     }
