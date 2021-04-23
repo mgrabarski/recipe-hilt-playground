@@ -45,6 +45,7 @@
 
                 <ImageView
                     android:id="@+id/ingredient_imageView"
+                    loadImageFromUrl="@{ingredient.imageUrl}"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:layout_constraintBottom_toBottomOf="@+id/white_background"
@@ -61,7 +62,7 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="12dp"
-                    android:text="@string/name"
+                    android:text="@{ingredient.name}"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -74,6 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:text="@{Double.toString(ingredient.amount)}"
                     app:layout_constraintStart_toStartOf="@+id/ingredient_name"
                     app:layout_constraintTop_toBottomOf="@+id/ingredient_name"
                     tools:text="100" />
@@ -83,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/grams"
+                    android:text="@{ingredient.unit}"
                     app:layout_constraintBottom_toBottomOf="@+id/ingredient_amount"
                     app:layout_constraintStart_toEndOf="@+id/ingredient_amount"
                     app:layout_constraintTop_toTopOf="@+id/ingredient_amount" />
@@ -94,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="12dp"
-                    android:text="@string/consistency"
+                    android:text="@{ingredient.consistency}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/ingredient_amount"
                     app:layout_constraintTop_toBottomOf="@+id/ingredient_amount" />
@@ -106,7 +108,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginBottom="12dp"
-                    android:text="@string/original"
+                    android:text="@{ingredient.original}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/ingredient_consistency"

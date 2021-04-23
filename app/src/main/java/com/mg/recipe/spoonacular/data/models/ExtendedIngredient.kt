@@ -1,6 +1,7 @@
 package com.mg.recipe.spoonacular.data.models
 
 import com.google.gson.annotations.SerializedName
+import com.mg.recipe.spoonacular.BASE_INGREDIENTS_IMAGE_URL
 import java.io.Serializable
 
 data class ExtendedIngredient(
@@ -16,4 +17,8 @@ data class ExtendedIngredient(
     val original: String,
     @SerializedName("unit")
     val unit: String
-) : Serializable
+) : Serializable {
+
+    val imageUrl
+        get() = BASE_INGREDIENTS_IMAGE_URL + image
+}
