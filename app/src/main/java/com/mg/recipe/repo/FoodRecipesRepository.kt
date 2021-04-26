@@ -1,6 +1,6 @@
 package com.mg.recipe.repo
 
-import com.mg.recipe.repo.network.RemoteDataSource
+import com.mg.recipe.repo.sources.RemoteDataSource
 import com.mg.recipe.repo.sources.LocalDataSource
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject

@@ -1,6 +1,7 @@
-package com.mg.recipe.repo.network
+package com.mg.recipe.repo.sources
 
 import com.mg.recipe.BuildConfig
+import com.mg.recipe.repo.network.QUERY_API_KEY
 import com.mg.recipe.spoonacular.FoodRecipesApi
 import javax.inject.Inject
 
