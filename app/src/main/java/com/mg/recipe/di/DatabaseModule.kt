@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.mg.recipe.repo.local.DATABASE_NAME
 import com.mg.recipe.repo.local.RecipesDatabase
+import com.mg.recipe.repo.local.daos.FavoriteDao
 import com.mg.recipe.repo.local.daos.RecipeDao
 import dagger.Module
 import dagger.Provides
@@ -29,4 +30,8 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideRecipesDao(database: RecipesDatabase): RecipeDao = database.recipesDao()
+
+    @Singleton
+    @Provides
+    fun provideFavoriteDao(database: RecipesDatabase): FavoriteDao = database.favoriteDao()
 }
