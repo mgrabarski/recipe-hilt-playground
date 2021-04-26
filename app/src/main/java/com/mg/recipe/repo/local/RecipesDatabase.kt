@@ -5,10 +5,11 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.mg.recipe.repo.local.converters.RecipesTypeConverter
 import com.mg.recipe.repo.local.daos.RecipeDao
+import com.mg.recipe.repo.local.entities.Favorite
 import com.mg.recipe.repo.local.entities.Recipe
 
 @Database(
-    entities = [Recipe::class],
+    entities = [Recipe::class, Favorite::class],
     version = 1
 )
 @TypeConverters(RecipesTypeConverter::class)
