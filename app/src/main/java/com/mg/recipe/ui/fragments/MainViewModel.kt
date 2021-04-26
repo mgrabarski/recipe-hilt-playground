@@ -7,6 +7,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.mg.recipe.App
 import com.mg.recipe.repo.FoodRecipesRepository
+import com.mg.recipe.repo.local.entities.Favorite
 import com.mg.recipe.repo.local.entities.Recipe
 import com.mg.recipe.repo.network.NetworkResult
 import com.mg.recipe.repo.network.NetworkResult.*
@@ -24,6 +25,7 @@ class MainViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(application) {
 
     val readRecipes: LiveData<List<Recipe>> = repository.local.readDatabase().asLiveData()
+    val readFavorite: LiveData<List<Favorite>> = repository.local.readAllFavorite().asLiveData()
 
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
     var searchRecipeResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
@@ -78,6 +80,24 @@ class MainViewModel @ViewModelInject constructor(
     private fun insertRecipes(recipe: Recipe) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.local.insertRecipes(recipe)
+        }
+    }
+
+    private fun insertFavoriteRecipe(favorite: Favorite) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertFavorite(favorite)
+        }
+    }
+
+    private fun deleteFavoriteRecipe(favorite: Favorite) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.deleteFavorite(favorite)
+        }
+    }
+
+    private fun deleteAllFavoriteRecipes() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.deleteAllFavorites()
         }
     }
 
