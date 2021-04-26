@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.mg.recipe.repo.local.converters.RecipesTypeConverter
+import com.mg.recipe.repo.local.daos.FavoriteDao
 import com.mg.recipe.repo.local.daos.RecipeDao
 import com.mg.recipe.repo.local.entities.Favorite
 import com.mg.recipe.repo.local.entities.Recipe
@@ -16,4 +17,6 @@ import com.mg.recipe.repo.local.entities.Recipe
 abstract class RecipesDatabase : RoomDatabase() {
 
     abstract fun recipesDao(): RecipeDao
+
+    abstract fun favoriteDao(): FavoriteDao
 }
