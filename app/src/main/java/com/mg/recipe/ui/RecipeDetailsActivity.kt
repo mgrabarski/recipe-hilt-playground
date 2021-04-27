@@ -21,6 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 const val KEY_RECIPE_BUNDLE = "recipeBundle"
 
+// TODO: 27/04/2021 Refactor to separate view model
+
 @AndroidEntryPoint
 class RecipeDetailsActivity : AppCompatActivity() {
 
