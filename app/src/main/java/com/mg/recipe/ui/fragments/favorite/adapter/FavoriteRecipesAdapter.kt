@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.mg.recipe.components.AppDiffUtil
 import com.mg.recipe.databinding.RowFavoriteRecipeBinding
 import com.mg.recipe.repo.local.entities.Favorite
 
@@ -20,13 +21,14 @@ class FavoriteRecipesAdapter : RecyclerView.Adapter<FavoriteRecipesAdapter.ViewH
     override fun getItemCount() = favoriteRecipes.size
 
     fun setData(newFavoriteRecipes: List<Favorite>) {
-        val favoriteRecipesDiffUtil = RecipesDiffUtil(favoriteRecipes, newFavoriteRecipes)
+        val favoriteRecipesDiffUtil = AppDiffUtil(favoriteRecipes, newFavoriteRecipes)
         val diffUtilResult = DiffUtil.calculateDiff(favoriteRecipesDiffUtil)
         favoriteRecipes = newFavoriteRecipes
         diffUtilResult.dispatchUpdatesTo(this)
     }
 
-    class ViewHolder(private val binding: RowFavoriteRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: RowFavoriteRecipeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(favoritesEntity: Favorite) {
             binding.favoritesEntity = favoritesEntity
