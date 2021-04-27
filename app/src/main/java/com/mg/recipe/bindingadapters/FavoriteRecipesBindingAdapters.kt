@@ -1,0 +1,35 @@
+package com.mg.recipe.bindingadapters
+
+import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.mg.recipe.repo.local.entities.Favorite
+import com.mg.recipe.ui.fragments.favorite.adapter.FavoriteRecipesAdapter
+
+@BindingAdapter("viewVisibility", "setData", requireAll = false)
+fun setDataAndViewVisibility(
+    view: View,
+    favoritesEntity: List<Favorite>?,
+    adapter: FavoriteRecipesAdapter?
+) {
+    if (favoritesEntity.isNullOrEmpty()) {
+        when (view) {
+            is ImageView -> view.visibility = VISIBLE
+            is TextView -> view.visibility = VISIBLE
+            is RecyclerView -> view.visibility = INVISIBLE
+        }
+    } else {
+        when (view) {
+            is ImageView -> view.visibility = INVISIBLE
+            is TextView -> view.visibility = INVISIBLE
+            is RecyclerView -> {
+                view.visibility = VISIBLE
+                adapter?.setData(favoritesEntity)
+            }
+        }
+    }
+}

@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FavoriteRecipesFragment : Fragment() {
 
-    private val mAdapter: FavoriteRecipesAdapter by lazy { FavoriteRecipesAdapter() }
+    private val mAdapter: FavoriteRecipesAdapter = FavoriteRecipesAdapter()
     private val mainViewModel: MainViewModel by viewModels()
 
     private var _binding: FragmentFavoriteReceipesBinding? = null
@@ -27,11 +27,12 @@ class FavoriteRecipesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFavoriteReceipesBinding.inflate(inflater, container, false)
-        binding.apply {
-            lifecycleOwner = this@FavoriteRecipesFragment
-            mainViewModel = this@FavoriteRecipesFragment.mainViewModel
-            mAdapter = this@FavoriteRecipesFragment.mAdapter
-        }
+
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel
+        binding.favoriteRecipesRecyclerView.adapter = mAdapter
+        binding.adapter = mAdapter
+
         return binding.root
     }
 
