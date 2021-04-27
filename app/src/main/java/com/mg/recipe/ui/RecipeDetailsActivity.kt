@@ -1,6 +1,7 @@
 package com.mg.recipe.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -67,6 +68,9 @@ class RecipeDetailsActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.recipe_details_menu, menu)
+        menu?.findItem(R.id.save_to_favorites)?.let {
+            checkSavedRecipes(it)
+        }
         return true
     }
 
@@ -84,6 +88,24 @@ class RecipeDetailsActivity : AppCompatActivity() {
         mainViewModel.insertFavoriteRecipe(entity)
         changeMenuItemColor(menuItem, R.color.yellow)
         showSnackBar(R.string.recipe_saved)
+    }
+
+    private fun checkSavedRecipes(menuItem: MenuItem) {
+        mainViewModel.readFavorite.observe(this, {
+            try {
+                for (savedRecipe in it) {
+                    if (savedRecipe.result.id == args.result.id) {
+                        changeMenuItemColor(menuItem, R.color.yellow)
+                        savedRecipeId = savedRecipe.id
+                        recipeSaved = true
+                    } else {
+                        changeMenuItemColor(menuItem, R.color.white)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d("DetailsActivity", e.message.toString())
+            }
+        })
     }
 
     private fun changeMenuItemColor(menuItem: MenuItem, color: Int) {
