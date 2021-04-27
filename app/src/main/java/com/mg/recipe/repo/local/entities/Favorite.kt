@@ -8,6 +8,6 @@ import com.mg.recipe.spoonacular.data.models.Result
 @Entity(tableName = FAVORITE_TABLE)
 class Favorite(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long = 0,
     val result: Result
 )

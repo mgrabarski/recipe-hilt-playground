@@ -43,4 +43,6 @@
     <string name="consistency">Consistency</string>
     <string name="original">Original</string>
     <string name="save_to_favorites">Save to favorites</string>
+    <string name="ok">Ok</string>
+    <string name="recipe_saved">Recipe saved.</string>
 </resources>
