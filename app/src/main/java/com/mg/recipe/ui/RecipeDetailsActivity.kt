@@ -77,8 +77,10 @@ class RecipeDetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
-        } else if (item.itemId == R.id.save_to_favorites) {
+        } else if (item.itemId == R.id.save_to_favorites && !recipeSaved) {
             saveToFavorites(item)
+        } else if (item.itemId == R.id.save_to_favorites && recipeSaved) {
+            removeFromFavorites(item)
         }
         return super.onOptionsItemSelected(item)
     }
@@ -88,6 +90,14 @@ class RecipeDetailsActivity : AppCompatActivity() {
         mainViewModel.insertFavoriteRecipe(entity)
         changeMenuItemColor(menuItem, R.color.yellow)
         showSnackBar(R.string.recipe_saved)
+    }
+
+    private fun removeFromFavorites(item: MenuItem) {
+        val entity = Favorite(savedRecipeId, args.result)
+        mainViewModel.deleteFavoriteRecipe(entity)
+        changeMenuItemColor(item, R.color.white)
+        showSnackBar(R.string.removed_from_favorites)
+        recipeSaved = false
     }
 
     private fun checkSavedRecipes(menuItem: MenuItem) {
