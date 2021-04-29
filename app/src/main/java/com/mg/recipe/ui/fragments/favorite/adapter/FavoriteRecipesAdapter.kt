@@ -18,6 +18,8 @@ class FavoriteRecipesAdapter(
 
     private var favoriteRecipes = emptyList<Favorite>()
 
+    private lateinit var actionMode: ActionMode
+
     private var viewHolders = arrayListOf<ViewHolder>()
     private var multiSelection = false
     private val selectedRecipes = arrayListOf<Favorite>()
@@ -57,9 +59,11 @@ class FavoriteRecipesAdapter(
         if (selectedRecipes.contains(favorite)) {
             selectedRecipes.remove(favorite)
             changeFavoriteStyle(holder, R.color.cardBackgroundColor, R.color.strokeColor)
+            applyActionModeTitle()
         } else {
             selectedRecipes.add(favorite)
             changeFavoriteStyle(holder, R.color.cardBackgroundLightColor, R.color.colorPrimary)
+            applyActionModeTitle()
         }
     }
 
@@ -71,6 +75,12 @@ class FavoriteRecipesAdapter(
             ContextCompat.getColor(requireActivity, strokeColor)
     }
 
+    private fun applyActionModeTitle() {
+        when (selectedRecipes.size) {
+            0 -> actionMode.finish()
+        }
+    }
+
     fun setData(newFavoriteRecipes: List<Favorite>) {
         val favoriteRecipesDiffUtil = AppDiffUtil(favoriteRecipes, newFavoriteRecipes)
         val diffUtilResult = DiffUtil.calculateDiff(favoriteRecipesDiffUtil)
@@ -80,6 +90,7 @@ class FavoriteRecipesAdapter(
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mode?.menuInflater?.inflate(R.menu.favorites_delete_menu, menu)
+        actionMode = mode!!
         applyStatusBarColor(R.color.contextualStatusBarColor)
         return true
     }
