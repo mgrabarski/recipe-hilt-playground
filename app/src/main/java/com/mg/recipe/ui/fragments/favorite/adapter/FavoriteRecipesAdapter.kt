@@ -78,6 +78,8 @@ class FavoriteRecipesAdapter(
     private fun applyActionModeTitle() {
         when (selectedRecipes.size) {
             0 -> actionMode.finish()
+            1 -> actionMode.title = "${selectedRecipes.size} item selected"
+            else ->actionMode.title = "${selectedRecipes.size} items selected"
         }
     }
 
