@@ -132,6 +132,12 @@ class FavoriteRecipesAdapter(
         Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).setAction(R.string.ok) {}.show()
     }
 
+    fun closeContextualMenu() {
+        if (this::actionMode.isInitialized) {
+            actionMode.finish()
+        }
+    }
+
     class ViewHolder(val binding: RowFavoriteRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

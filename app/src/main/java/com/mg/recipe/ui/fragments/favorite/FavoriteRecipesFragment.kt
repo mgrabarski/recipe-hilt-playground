@@ -27,4 +27,9 @@ class FavoriteRecipesFragment : Fragment() {
         favoriteRecipesRecyclerView.adapter = mAdapter
         adapter = mAdapter
     }.root
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mAdapter.closeContextualMenu()
+    }
 }
