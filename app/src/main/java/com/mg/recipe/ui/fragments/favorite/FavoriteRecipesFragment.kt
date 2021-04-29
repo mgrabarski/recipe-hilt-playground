@@ -1,11 +1,10 @@
 package com.mg.recipe.ui.fragments.favorite
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.mg.recipe.R
 import com.mg.recipe.databinding.FragmentFavoriteReceipesBinding
 import com.mg.recipe.ui.fragments.MainViewModel
 import com.mg.recipe.ui.fragments.favorite.adapter.FavoriteRecipesAdapter
@@ -26,7 +25,20 @@ class FavoriteRecipesFragment : Fragment() {
         mainViewModel = mMainViewModel
         favoriteRecipesRecyclerView.adapter = mAdapter
         adapter = mAdapter
+
+        setHasOptionsMenu(true)
     }.root
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.favorite_recipe_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete_all_favorites) {
+            mMainViewModel.deleteAllFavoriteRecipes()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
