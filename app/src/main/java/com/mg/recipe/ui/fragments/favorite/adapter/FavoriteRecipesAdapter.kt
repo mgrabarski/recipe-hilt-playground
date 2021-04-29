@@ -1,6 +1,7 @@
 package com.mg.recipe.ui.fragments.favorite.adapter
 
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -45,6 +46,7 @@ class FavoriteRecipesAdapter(
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mode?.menuInflater?.inflate(R.menu.favorites_delete_menu, menu)
+        applyStatusBarColor(R.color.contextualStatusBarColor)
         return true
     }
 
@@ -53,6 +55,11 @@ class FavoriteRecipesAdapter(
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean = true
 
     override fun onDestroyActionMode(mode: ActionMode?) {
+        applyStatusBarColor(R.color.statusBarColor)
+    }
+
+    private fun applyStatusBarColor(color: Int) {
+        requireActivity.window.statusBarColor = ContextCompat.getColor(requireActivity, color)
     }
 
     class ViewHolder(val binding: RowFavoriteRecipeBinding) :
