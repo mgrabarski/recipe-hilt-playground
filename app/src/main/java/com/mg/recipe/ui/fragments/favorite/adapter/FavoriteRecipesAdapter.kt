@@ -1,21 +1,37 @@
 package com.mg.recipe.ui.fragments.favorite.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.mg.recipe.R
 import com.mg.recipe.components.AppDiffUtil
 import com.mg.recipe.databinding.RowFavoriteRecipeBinding
 import com.mg.recipe.repo.local.entities.Favorite
+import com.mg.recipe.ui.fragments.favorite.FavoriteRecipesFragmentDirections.Companion.actionFavoriteReceipesFragmentToRecipeDetailsActivity
 
-class FavoriteRecipesAdapter : RecyclerView.Adapter<FavoriteRecipesAdapter.ViewHolder>() {
+class FavoriteRecipesAdapter(
+    private val requireActivity: FragmentActivity
+) : RecyclerView.Adapter<FavoriteRecipesAdapter.ViewHolder>(), ActionMode.Callback {
 
     private var favoriteRecipes = emptyList<Favorite>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(favoriteRecipes[position])
+        val selectedFavorite = favoriteRecipes[position]
+        holder.bind(selectedFavorite)
+
+        holder.binding.recipesRowLayout.setOnClickListener {
+            it.findNavController().navigate(
+                actionFavoriteReceipesFragmentToRecipeDetailsActivity(selectedFavorite.result)
+            )
+        }
+        holder.binding.recipesRowLayout.setOnLongClickListener {
+            requireActivity.startActionMode(this)
+            true
+        }
     }
 
     override fun getItemCount() = favoriteRecipes.size
@@ -27,7 +43,19 @@ class FavoriteRecipesAdapter : RecyclerView.Adapter<FavoriteRecipesAdapter.ViewH
         diffUtilResult.dispatchUpdatesTo(this)
     }
 
-    class ViewHolder(private val binding: RowFavoriteRecipeBinding) :
+    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        mode?.menuInflater?.inflate(R.menu.favorites_delete_menu, menu)
+        return true
+    }
+
+    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = true
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean = true
+
+    override fun onDestroyActionMode(mode: ActionMode?) {
+    }
+
+    class ViewHolder(val binding: RowFavoriteRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(favoritesEntity: Favorite) {

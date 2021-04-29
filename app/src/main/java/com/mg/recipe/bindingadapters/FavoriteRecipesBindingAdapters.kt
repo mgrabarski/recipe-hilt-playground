@@ -36,12 +36,3 @@ fun setDataAndViewVisibility(
         }
     }
 }
-
-@BindingAdapter("onFavoriteClickListener")
-fun onFavoriteClickListener(rowLayout: ConstraintLayout, favorite: Favorite) {
-    rowLayout.setOnClickListener {
-        rowLayout.findNavController().navigate(
-            actionFavoriteReceipesFragmentToRecipeDetailsActivity(favorite.result)
-        )
-    }
-}
