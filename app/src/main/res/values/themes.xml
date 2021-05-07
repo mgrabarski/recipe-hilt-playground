@@ -10,12 +10,25 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="actionModeBackground">@color/contextualActionBarColor</item>
+
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+        <item name="bottomNavigationStyle">@style/BottomNavigationViewStyle</item>
     </style>
 
     <style name="SplashScreenStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/cardview_dark_background</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
+        <item name="background">@color/statusBarColor</item>
+    </style>
+
+    <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">@color/bottomNavBackground</item>
+        <item name="itemIconTint">@color/bottom_nav_view_item_color</item>
+        <item name="itemTextColor">@color/bottom_nav_view_item_color</item>
     </style>
 
     <style name="RecipeChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
