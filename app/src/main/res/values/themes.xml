@@ -12,6 +12,10 @@
         <item name="actionModeBackground">@color/contextualActionBarColor</item>
     </style>
 
+    <style name="SplashScreenStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/cardview_dark_background</item>
+    </style>
+
     <style name="RecipeChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/checkedChipBackgroundColor</item>
         <item name="android:textColor">@color/chipTextColor</item>
