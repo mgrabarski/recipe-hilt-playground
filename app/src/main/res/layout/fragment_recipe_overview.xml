@@ -10,9 +10,12 @@
             type="com.mg.recipe.spoonacular.data.models.Result" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/cardBackgroundColor"
+        app:layoutDescription="@xml/fragment_recipe_overview">
 
         <ImageView
             android:id="@+id/main_imageView"
@@ -248,6 +251,7 @@
             app:layout_constraintTop_toTopOf="@+id/cheap_imageView" />
 
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="12dp"
@@ -272,5 +276,5 @@
             </FrameLayout>
         </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
